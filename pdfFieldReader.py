@@ -21,7 +21,7 @@ def extract_pdf_fields(file_path):
                 pass
         return fields_dict
 
-# fields_dict = extract_pdf_fields(test_path.file)
-# with open("output.txt", "w") as f:
-#     for field_name, field_value in fields_dict.items():
-#         print(f"Field: {field_name}, Value: {field_value}", file=f)
+fields_dict = extract_pdf_fields(test_path.file)
+with open("output.txt", "w") as f:
+    for field_name, field_value in fields_dict.items():
+        print(f"Field: {field_name}, Value: {field_value}", file=f)
