@@ -5,12 +5,14 @@ from tkinter import ttk
 import sv_ttk
 
 filepath = ''
+fields_dict = {}
 
 # opens a file dialog and stores the selected file path
 def openFile():
     global filepath
     filepath = filedialog.askopenfilename()
     print(filepath)
+    global fields_dict
     fields_dict = extract_pdf_fields(filepath)
     displayField(fields_dict)
 
@@ -20,6 +22,16 @@ def displayField(dict):
         display_text.insert(tk.END, "No Fields Found")
     for field_name, field_value in dict.items():
         display_text.insert(tk.END, f"Field: {field_name}, Value: {field_value}\n")
+
+def saveToText():
+    file = filedialog.asksaveasfile(defaultextension='.txt', initialdir=filepath, filetypes=[('Text file', '.txt')])
+    if file is None:
+        return
+    filetext = ''
+    for field_name, field_value in fields_dict.items():
+        filetext += f"Field: {field_name}, Value: {field_value}\n"
+    file.write(filetext)
+    file.close()
 
 # window
 window = tk.Tk()
@@ -32,7 +44,7 @@ intro_label = tk.Label(window, width=300, height=50,wraplength=200,
                         text="This tool reads the fields in a pdf and allows you to export it into a file")
 display_text = tk.Text(window)
 select_button = ttk.Button(text="SELECT PDF", command=openFile)
-saveTXT_button = ttk.Button(text="SAVE TO TXT")
+saveTXT_button = ttk.Button(text="SAVE TO TXT", command=saveToText)
 saveCSV_button = ttk.Button(text="SAVE TO CSV")
 saveJSON_button = ttk.Button(text="SAVE TO JSON")
 
