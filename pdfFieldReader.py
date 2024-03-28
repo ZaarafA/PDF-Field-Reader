@@ -1,6 +1,5 @@
 # MAIN LOGIC
 import PyPDF2
-import test_path
 
 def extract_pdf_fields(file_path):
     with open(file_path, 'rb') as document:
@@ -26,5 +25,3 @@ def save_to_txt(fields_dict):
     with open("output.txt", "w") as f:
         for field_name, field_value in fields_dict.items():
             print(f"Field: {field_name}, Value: {field_value}", file=f)
-
-fields_dict = extract_pdf_fields(test_path.file)

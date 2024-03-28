@@ -11,6 +11,15 @@ def openFile():
     global filepath
     filepath = filedialog.askopenfilename()
     print(filepath)
+    fields_dict = extract_pdf_fields(filepath)
+    displayField(fields_dict)
+
+def displayField(dict):
+    if not dict:
+        display_text.delete('1.0',tk.END)
+        display_text.insert(tk.END, "No Fields Found")
+    for field_name, field_value in dict.items():
+        display_text.insert(tk.END, f"Field: {field_name}, Value: {field_value}\n")
 
 # window
 window = tk.Tk()
