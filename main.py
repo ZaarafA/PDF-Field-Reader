@@ -2,7 +2,7 @@ from pdfFieldReader import extract_pdf_fields
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import ttk
-import sv_ttk
+#import sv_ttk
 import csv
 import json
 
@@ -87,5 +87,5 @@ saveCSV_button.place(width=250,x=65,y=175)
 saveJSON_button.place(width=250,x=65,y=215)
 
 # Window init
-sv_ttk.set_theme("dark")
+#sv_ttk.set_theme("dark")
 window.mainloop()
