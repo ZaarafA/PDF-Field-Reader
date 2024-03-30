@@ -12,10 +12,13 @@ fields_dict = {}
 def openFile():
     global filepath
     filepath = filedialog.askopenfilename()
-    print(filepath)
     global fields_dict
     fields_dict = extract_pdf_fields(filepath)
     displayField(fields_dict)
+
+    print(filepath)
+    saveTXT_button.config(state="normal") # enable buttons
+    saveCSV_button.config(state="normal")
 
 # loads PDF fields into text display widget
 def displayField(dict):
@@ -58,9 +61,9 @@ intro_label = tk.Label(window, width=300, height=50,wraplength=200,
                         text="This tool reads the fields in a pdf and allows you to export it into a file")
 display_text = tk.Text(window)
 select_button = ttk.Button(text="SELECT PDF", command=openFile)
-saveTXT_button = ttk.Button(text="SAVE TO TXT", command=saveToText)
-saveCSV_button = ttk.Button(text="SAVE TO CSV", command=saveToCSV)
-saveJSON_button = ttk.Button(text="SAVE TO JSON")
+saveTXT_button = ttk.Button(text="SAVE TO TXT", command=saveToText, state=tk.DISABLED)
+saveCSV_button = ttk.Button(text="SAVE TO CSV", command=saveToCSV, state=tk.DISABLED)
+saveJSON_button = ttk.Button(text="SAVE TO JSON", state=tk.DISABLED)
 
 # Layout
 intro_label.place(x=25,y=10,width=350,height=50)
