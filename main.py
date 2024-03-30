@@ -1,13 +1,16 @@
-from pdfFieldReader import *
+from pdfFieldReader import extract_pdf_fields
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import ttk
 import sv_ttk
 import csv
+import json
 
+# global variables
 filepath = ''
 fields_dict = {}
 
+##### MAIN LOGIC #####
 # opens a file dialog and stores the selected file path
 def openFile():
     global filepath
@@ -19,6 +22,7 @@ def openFile():
     print(filepath)
     saveTXT_button.config(state="normal") # enable buttons
     saveCSV_button.config(state="normal")
+    saveJSON_button.config(state="normal")
 
 # loads PDF fields into text display widget
 def displayField(dict):
@@ -48,9 +52,18 @@ def saveToCSV():
         for field_name, field_value in fields_dict.items():
             writer.writerow([field_name,field_value])
     csv_file.close()
+# save field and values into a JSON file
+def saveToJSON():
+    file = filedialog.asksaveasfile(defaultextension='.json', initialdir=filepath, filetypes=[('JSON file', '.json')])
+    if file is None:
+        return
+    with open(file.name, 'w') as json_file:
+        json.dump(fields_dict, json_file, indent=4)
+    json_file.close()
 
 
-# window
+##### TKINTER SETUP #####
+# Window Setup
 window = tk.Tk()
 window.title("PDF Field Extractor")
 window.geometry("800x600")
@@ -63,7 +76,7 @@ display_text = tk.Text(window)
 select_button = ttk.Button(text="SELECT PDF", command=openFile)
 saveTXT_button = ttk.Button(text="SAVE TO TXT", command=saveToText, state=tk.DISABLED)
 saveCSV_button = ttk.Button(text="SAVE TO CSV", command=saveToCSV, state=tk.DISABLED)
-saveJSON_button = ttk.Button(text="SAVE TO JSON", state=tk.DISABLED)
+saveJSON_button = ttk.Button(text="SAVE TO JSON", command=saveToJSON, state=tk.DISABLED)
 
 # Layout
 intro_label.place(x=25,y=10,width=350,height=50)
@@ -73,7 +86,6 @@ saveTXT_button.place(width=250,x=65,y=135)
 saveCSV_button.place(width=250,x=65,y=175)
 saveJSON_button.place(width=250,x=65,y=215)
 
-
-# window init
+# Window init
 sv_ttk.set_theme("dark")
 window.mainloop()
