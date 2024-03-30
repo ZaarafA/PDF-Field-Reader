@@ -2,3 +2,5 @@
 test_path.py
 /__pycache__
 output.txt
+*.spec
+/build

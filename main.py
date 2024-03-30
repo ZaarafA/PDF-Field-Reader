@@ -23,7 +23,6 @@ def openFile():
     saveTXT_button.config(state="normal") # enable buttons
     saveCSV_button.config(state="normal")
     saveJSON_button.config(state="normal")
-
 # loads PDF fields into text display widget
 def displayField(dict):
     if not dict:
@@ -32,6 +31,7 @@ def displayField(dict):
     for field_name, field_value in dict.items():
         display_text.insert(tk.END, f"Field: {field_name}, Value: {field_value}\n")
 
+### Save to File Functions ###
 # saves field and values into a text file
 def saveToText():
     file = filedialog.asksaveasfile(defaultextension='.txt', initialdir=filepath, filetypes=[('Text file', '.txt')])
